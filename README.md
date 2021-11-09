@@ -10,3 +10,31 @@ If you had some trouble into restoring some nuget packages, please consider to c
 ```
 dotnet nuget add source --name nuget.org https://api.nuget.org/v3/index.json
 ```
+
+## Notes
+### Migrations
+To add a migration, on Package Manager Console, you need to perform the following commands:
+
+1) This one will create a migration folder called ***Migrations***, and inside of it the migration
+class itself.
+```
+add-migration AddProductModelToDb
+```
+
+2) With the migration file checked, to push to the database we will use the  command bellow.
+```
+update-database
+```
+
+Those steps will generate the necessary changes into your database by taking advantage of ***codeFirst*** paradigm. 
+Which means that based on the value ***Database***, of your connection string, it will define the name
+for your database:
+```
+...
+  "ConnectionStrings": {
+    "DefaultConnection": "...Database=MangoProductAPI..."
+  }
+...
+```
+
+And the migration file itself will be the one responsible for create the table itself into your database. 

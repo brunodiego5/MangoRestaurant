@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Mango.MessageBus
+﻿namespace Mango.MessageBus;
+public class Class1
 {
-    public class Class1
-    {
-    }
+
 }

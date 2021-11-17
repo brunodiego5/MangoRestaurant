@@ -90,4 +90,22 @@ public class ProductAPIController : ControllerBase
 
         return _responseProductDto;
     }
+
+    [HttpDelete]
+    public async Task<object> Delete(int id)
+    {
+        try
+        {
+            bool isSuccess = await _productRepository.DeleteProduct(id);
+            _responseProductDto.Result = isSuccess;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError($"ERROR: An exception was thrown while calling Delete(): {exception.Message} | {exception.StackTrace}");
+            _responseProductDto.IsSuccess = false;
+            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling Delete(): {exception.Message}"};
+        }
+
+        return _responseProductDto;
+    }
 }

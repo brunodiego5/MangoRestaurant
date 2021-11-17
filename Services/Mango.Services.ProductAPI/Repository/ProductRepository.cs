@@ -28,10 +28,12 @@ public class ProductRepository : IProductRepository
         }
 
         Product product = _mapper.Map<ProductDto, Product>(productDto);
-        if(product.ProductId > 0){
+        if (product.ProductId > 0)
+        {
             _dbContext.Products.Update(product);
         }
-        else{
+        else
+        {
             _dbContext.Products.Add(product);
         }
 
@@ -44,10 +46,11 @@ public class ProductRepository : IProductRepository
         try
         {
             Product product = await _dbContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
-            if(product == null){
+            if (product == null)
+            {
                 return false;
             }
-            
+
             _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
 
@@ -62,11 +65,12 @@ public class ProductRepository : IProductRepository
 
     public async Task<ProductDto> GetProductById(int productId)
     {
-        if(productId <= 0){
+        if (productId <= 0)
+        {
             _logger.LogError($"ERROR: The requested id [{productId}] is not a valid id.");
             return null;
         }
-        
+
         Product product = await _dbContext.Products.Where(p => p.ProductId == productId).FirstOrDefaultAsync();
         return _mapper.Map<ProductDto>(product);
     }

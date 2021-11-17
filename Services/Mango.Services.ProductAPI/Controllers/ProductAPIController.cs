@@ -11,7 +11,7 @@ public class ProductAPIController : ControllerBase
     private readonly ILogger<ProductAPIController> _logger;
     private readonly IProductRepository _productRepository;
 
-    public ProductAPIController(ILogger<ProductAPIController>logger, IProductRepository productRepository)
+    public ProductAPIController(ILogger<ProductAPIController> logger, IProductRepository productRepository)
     {
         _logger = logger;
         _productRepository = productRepository;
@@ -23,14 +23,14 @@ public class ProductAPIController : ControllerBase
     {
         try
         {
-             IEnumerable<ProductDto> productDto = await _productRepository.GetProducts();
+            IEnumerable<ProductDto> productDto = await _productRepository.GetProducts();
             _responseProductDto.Result = productDto;
         }
         catch (Exception exception)
         {
             _logger.LogError($"ERROR: An exception was thrown while calling GetProducts(): {exception.Message} | {exception.StackTrace}");
             _responseProductDto.IsSuccess = false;
-            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling GetProducts(): {exception.Message}"};
+            _responseProductDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling GetProducts(): {exception.Message}" };
         }
 
         return _responseProductDto;
@@ -42,19 +42,19 @@ public class ProductAPIController : ControllerBase
     {
         try
         {
-             ProductDto productDto = await _productRepository.GetProductById(id);
+            ProductDto productDto = await _productRepository.GetProductById(id);
             _responseProductDto.Result = productDto;
         }
         catch (Exception exception)
         {
             _logger.LogError($"ERROR: An exception was thrown while calling GetProductsById(): {exception.Message} | {exception.StackTrace}");
             _responseProductDto.IsSuccess = false;
-            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling GetProductsById(): {exception.Message}"};
+            _responseProductDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling GetProductsById(): {exception.Message}" };
         }
 
         return _responseProductDto;
     }
-    
+
     [HttpPost]
     public async Task<object> Post([FromBody] ProductDto productDto)
     {
@@ -67,7 +67,7 @@ public class ProductAPIController : ControllerBase
         {
             _logger.LogError($"ERROR: An exception was thrown while calling Post(): {exception.Message} | {exception.StackTrace}");
             _responseProductDto.IsSuccess = false;
-            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling Post(): {exception.Message}"};
+            _responseProductDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling Post(): {exception.Message}" };
         }
 
         return _responseProductDto;
@@ -85,7 +85,7 @@ public class ProductAPIController : ControllerBase
         {
             _logger.LogError($"ERROR: An exception was thrown while calling Put(): {exception.Message} | {exception.StackTrace}");
             _responseProductDto.IsSuccess = false;
-            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling Put(): {exception.Message}"};
+            _responseProductDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling Put(): {exception.Message}" };
         }
 
         return _responseProductDto;
@@ -103,7 +103,7 @@ public class ProductAPIController : ControllerBase
         {
             _logger.LogError($"ERROR: An exception was thrown while calling Delete(): {exception.Message} | {exception.StackTrace}");
             _responseProductDto.IsSuccess = false;
-            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling Delete(): {exception.Message}"};
+            _responseProductDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling Delete(): {exception.Message}" };
         }
 
         return _responseProductDto;

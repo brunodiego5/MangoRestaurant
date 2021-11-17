@@ -35,4 +35,23 @@ public class ProductAPIController : ControllerBase
 
         return _responseProductDto;
     }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<object> GetProductsById(int id)
+    {
+        try
+        {
+             ProductDto productDto = await _productRepository.GetProductById(id);
+            _responseProductDto.Result = productDto;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError($"ERROR: An exception was thrown while calling GetProductsById(): {exception.Message} | {exception.StackTrace}");
+            _responseProductDto.IsSuccess = false;
+            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling GetProductsById(): {exception.Message}"};
+        }
+
+        return _responseProductDto;
+    }
 }

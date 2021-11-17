@@ -10,9 +10,9 @@ public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
-    private readonly ILogger _logger;
+    private readonly ILogger<ProductRepository> _logger;
 
-    public ProductRepository(ApplicationDbContext dbContext, IMapper mapper, ILogger logger)
+    public ProductRepository(ApplicationDbContext dbContext, IMapper mapper, ILogger<ProductRepository> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;

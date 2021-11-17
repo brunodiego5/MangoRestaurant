@@ -72,4 +72,22 @@ public class ProductAPIController : ControllerBase
 
         return _responseProductDto;
     }
+
+    [HttpPut]
+    public async Task<object> Put([FromBody] ProductDto productDto)
+    {
+        try
+        {
+            ProductDto model = await _productRepository.CreateUpdateProduct(productDto);
+            _responseProductDto.Result = model;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError($"ERROR: An exception was thrown while calling Put(): {exception.Message} | {exception.StackTrace}");
+            _responseProductDto.IsSuccess = false;
+            _responseProductDto.ErrorMessages = new List<string>(){$"An exception was thrown while calling Put(): {exception.Message}"};
+        }
+
+        return _responseProductDto;
+    }
 }

@@ -61,6 +61,24 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Those lines of code above will add four products to our database.
 
+### Azure Image Blob Storage
+For the image storage we are going to use Azure Blob Storage. In order to do that you will first need to have an Azure account created.
+Once you have an Azure account created and a subscription up and running (I choose the free trial one for this project), you can create the blob storage.
+
+To create the blob storage, you will need to follow the following steps:
+
+1) First navigate to https://portal.azure.com/?quickstart=True#allservices and go to the Storage accounts section. In this section you will have to create an storage account to use.
+
+2) After you go to the Storage accounts section, you will see an icon that says "+Create" click on it move forward to the creation page.
+
+3) After you fill up all the required fields, you can hit the button "Review+Create" and once the validation passes you have to click on the "Create" button and your storage account will be fully created.
+
+4) Download the Azure Storage Explorer and authenticate your account.
+
+5) With your account authenticated, you can navigate to the blob storage and create a container. Et voila! you have a container created.
+
+6) To set the access from the internet you need right click on the create container and select "Set Public Access Level". Choose the one that better fits your needs and we are done.
+
 ### Migrations
 To add a migration, on Package Manager Console, you need to perform the following commands:
 

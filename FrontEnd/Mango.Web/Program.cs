@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 
 // Registering the value of ProductAPIBase as the one that is set on the ProductAPI element on appsettings.json
-StaticDetails.ProductAPIBase=builder.Configuration["ServiceUrls:ProductAPI"];
+StaticDetails.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
 
 // Registering the IProductRepository
 builder.Services.AddScoped<IProductService, ProductService>();

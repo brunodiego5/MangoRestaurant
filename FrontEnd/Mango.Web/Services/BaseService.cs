@@ -1,7 +1,7 @@
-using System.Text;
-using System.Text.Json;
 using Mango.Web.Models;
 using Mango.Web.Services.IServices;
+using System.Text;
+using System.Text.Json;
 
 namespace Mango.Web.Services;
 
@@ -29,8 +29,8 @@ public class BaseService : IBaseService
             message.RequestUri = new Uri(apiRequest.Url);
 
             client.DefaultRequestHeaders.Clear();
-            
-            if(apiRequest.Data != null)
+
+            if (apiRequest.Data != null)
             {
                 message.Content = new StringContent(JsonSerializer.Serialize(apiRequest.Data), Encoding.UTF8, "application/json");
             }
@@ -41,12 +41,15 @@ public class BaseService : IBaseService
                 case StaticDetails.ApiType.POST:
                     message.Method = HttpMethod.Post;
                     break;
+
                 case StaticDetails.ApiType.PUT:
                     message.Method = HttpMethod.Put;
                     break;
+
                 case StaticDetails.ApiType.DELETE:
                     message.Method = HttpMethod.Delete;
                     break;
+
                 default:
                     message.Method = HttpMethod.Get;
                     break;
@@ -62,12 +65,12 @@ public class BaseService : IBaseService
         catch (Exception exception)
         {
             _logger.LogError($"ERROR: An exception was thrown while calling SendAsync(): {exception.Message} | {exception.StackTrace}");
-            
+
             var errorDto = new ResponseProductDto();
             errorDto.IsSuccess = false;
             errorDto.DisplayMessage = "ERROR";
             errorDto.ErrorMessages = new List<string>() { $"An exception was thrown while calling SendAsync(): {exception.Message}" };
-            
+
             var response = JsonSerializer.Serialize(errorDto);
             var apiResponseDto = JsonSerializer.Deserialize<T>(response);
 

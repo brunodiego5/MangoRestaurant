@@ -1,7 +1,7 @@
-using System.Text.Json;
 using Mango.Web.Models;
 using Mango.Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Mango.Web.Controllers;
 
@@ -20,11 +20,11 @@ public class ProductController : Controller
     {
         List<ProductDto> products = new();
         var response = await _productService.GetAllProductsAsync<ResponseProductDto>();
-        if(response != null && response.IsSuccess)
+        if (response != null && response.IsSuccess)
         {
             products = JsonSerializer.Deserialize<List<ProductDto>>(response.Result.ToString());
         }
-        
+
         return View(products);
     }
 }

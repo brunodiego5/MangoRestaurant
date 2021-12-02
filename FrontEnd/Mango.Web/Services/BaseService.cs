@@ -11,12 +11,14 @@ public class BaseService : IBaseService
 
     public IHttpClientFactory _httpClientFactory { get; set; }
     public ILogger<BaseService> _logger { get; set; }
+    private readonly JsonSerializerOptions _jsonOptions;
 
     public BaseService(IHttpClientFactory httpClientFactory, ILogger<BaseService> logger)
     {
         responseModel = new ResponseProductDto();
         _httpClientFactory = httpClientFactory;
         _logger = logger;
+        _jsonOptions = new(JsonSerializerDefaults.Web);
     }
 
     public async Task<T> SendAsync<T>(ApiRequest apiRequest)
@@ -56,9 +58,9 @@ public class BaseService : IBaseService
             }
 
             apiResponse = await client.SendAsync(message);
-
+            
             var apiContent = await apiResponse.Content.ReadAsStringAsync();
-            var apiResponseDto = JsonSerializer.Deserialize<T>(apiContent);
+            var apiResponseDto = JsonSerializer.Deserialize<T>(apiContent, _jsonOptions);
 
             return apiResponseDto;
         }

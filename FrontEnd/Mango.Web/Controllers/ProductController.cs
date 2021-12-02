@@ -9,11 +9,13 @@ public class ProductController : Controller
 {
     private readonly IProductService _productService;
     private readonly ILogger<ProductController> _logger;
+    private readonly JsonSerializerOptions _jsonOptions;
 
     public ProductController(IProductService productService, ILogger<ProductController> logger)
     {
         _productService = productService;
         _logger = logger;
+        _jsonOptions = new(JsonSerializerDefaults.Web);
     }
 
     public async Task<IActionResult> ProductIndex()
@@ -22,7 +24,7 @@ public class ProductController : Controller
         var response = await _productService.GetAllProductsAsync<ResponseProductDto>();
         if (response != null && response.IsSuccess)
         {
-            products = JsonSerializer.Deserialize<List<ProductDto>>(response.Result.ToString());
+            products = JsonSerializer.Deserialize<List<ProductDto>>(response.Result.ToString(), _jsonOptions);
         }
 
         return View(products);

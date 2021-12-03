@@ -52,4 +52,33 @@ public class ProductController : Controller
 
         return View(model);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> EditProduct(int productId)
+    {
+        var response = await _productService.GetProductByIdAsync<ResponseProductDto>(productId);
+        if (response != null && response.IsSuccess)
+        {
+            ProductDto model = JsonSerializer.Deserialize<ProductDto>(response.Result.ToString(), _jsonOptions);
+            return View(model);
+        }
+
+        return NotFound();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditProduct(ProductDto model)
+    {
+        if (ModelState.IsValid)
+        {
+            var response = await _productService.UpdateProductAsync<ResponseProductDto>(model);
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(ProductIndex));
+            }
+        }
+
+        return View(model);
+    }
 }

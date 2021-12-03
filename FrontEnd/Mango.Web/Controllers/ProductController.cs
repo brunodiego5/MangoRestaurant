@@ -18,6 +18,7 @@ public class ProductController : Controller
         _jsonOptions = new(JsonSerializerDefaults.Web);
     }
 
+    [HttpGet]
     public async Task<IActionResult> ProductIndex()
     {
         List<ProductDto> products = new();
@@ -28,5 +29,27 @@ public class ProductController : Controller
         }
 
         return View(products);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ProductDto model)
+    {
+        if (ModelState.IsValid)
+        {
+            var response = await _productService.CreateProductAsync<ResponseProductDto>(model);
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(ProductIndex));
+            }
+        }
+
+        return View(model);
     }
 }

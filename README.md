@@ -12,6 +12,11 @@ dotnet nuget add source --name nuget.org https://api.nuget.org/v3/index.json
 ```
 
 ## Notes
+### Identity Server
+For the identity server we are going to use Duende, to configure and use it please refer to the documentation at https://docs.duendesoftware.com/identityserver/v5/quickstarts/0_overview/
+
+For this particular case we are going to use Interactive Applications with ASP.NET Core -> https://docs.duendesoftware.com/identityserver/v5/quickstarts/2_interactive/
+
 ### Seeding the database
 To seed the database with some data, we are going to modify our ApplicationDbContext class a little bit.
 We will need to override the OnModelCreating method with the following:
